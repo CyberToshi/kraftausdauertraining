@@ -287,6 +287,9 @@ func _finde_animation_player(wurzel: Node) -> AnimationPlayer:
 #  (anim/uebungen.tres, erzeugt von scripts/gen_animationen.gd).
 # =============================================================================
 const ANIM_BIBLIOTHEK: String = "res://anim/uebungen.tres"
+## Vorgeladene Fassung derselben Bibliothek. Das `preload` macht die Datei
+## für den Export sichtbar – ein reiner Pfad-String wird nicht mitgepackt.
+const ANIM_BIBLIOTHEK_LIB: AnimationLibrary = preload("res://anim/uebungen.tres")
 
 ## Kamera im Startzustand (noch keine Übung gewählt).
 const START_KAMERA: Dictionary = {
@@ -349,9 +352,11 @@ const BUEHNE: Dictionary = {
 
 ## Hängt die Animationsbibliothek an den AnimationPlayer (falls vorhanden).
 func _bibliothek_laden() -> void:
-	if animation_player == null or not ResourceLoader.exists(ANIM_BIBLIOTHEK):
+	if animation_player == null:
 		return
-	var bibliothek = load(ANIM_BIBLIOTHEK)
+	# ANIM_BIBLIOTHEK_LIB ist vorgeladen (siehe Abschnitt 8) und damit
+	# im Web-Export garantiert enthalten.
+	var bibliothek: AnimationLibrary = ANIM_BIBLIOTHEK_LIB
 	if bibliothek is AnimationLibrary and not animation_player.has_animation_library("uebungen"):
 		animation_player.add_animation_library("uebungen", bibliothek)
 
