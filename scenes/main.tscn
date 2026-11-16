@@ -327,3 +327,5 @@ text = "Bereit – noch keine Animation aktiv."
 [node name="Rechts" type="Control" parent="HUD/Overlay/Rand/Spalte/Unten"]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[editable path="Welt/Charakter"]
