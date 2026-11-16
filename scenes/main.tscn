@@ -6,10 +6,10 @@
 [ext_resource type="PackedScene" path="res://scenes/hantelbank.tscn" id="4_bank"]
 
 [sub_resource type="ProceduralSkyMaterial" id="SkyMaterial_1"]
-sky_top_color = Color(0.1, 0.13, 0.19, 1)
-sky_horizon_color = Color(0.42, 0.47, 0.55, 1)
-ground_bottom_color = Color(0.07, 0.08, 0.09, 1)
-ground_horizon_color = Color(0.3, 0.34, 0.38, 1)
+sky_top_color = Color(0.16, 0.152, 0.148, 1)
+sky_horizon_color = Color(0.38, 0.352, 0.33, 1)
+ground_bottom_color = Color(0.09, 0.085, 0.078, 1)
+ground_horizon_color = Color(0.31, 0.288, 0.27, 1)
 
 [sub_resource type="Sky" id="Sky_1"]
 sky_material = SubResource("SkyMaterial_1")
@@ -77,30 +77,30 @@ environment = SubResource("Environment_1")
 
 [node name="Sonnenlicht" type="DirectionalLight3D" parent="Welt"]
 rotation_degrees = Vector3(-50, -34, 0)
-light_color = Color(1, 0.97, 0.92, 1)
-light_energy = 1.45
+light_color = Color(1, 0.925, 0.82, 1)
+light_energy = 1.35
 shadow_enabled = true
 shadow_blur = 1.4
 directional_shadow_max_distance = 22.0
 
 [node name="Kantenlicht" type="DirectionalLight3D" parent="Welt"]
 rotation_degrees = Vector3(-28, 158, 0)
-light_color = Color(0.55, 0.72, 1, 1)
-light_energy = 0.7
+light_color = Color(0.92, 0.7, 0.5, 1)
+light_energy = 0.5
 
 [node name="Spotscheinwerfer" type="SpotLight3D" parent="Welt"]
 position = Vector3(0, 3.4, 0.3)
 rotation_degrees = Vector3(-90, 0, 0)
-light_color = Color(1, 0.96, 0.9, 1)
-light_energy = 2.2
+light_color = Color(1, 0.915, 0.79, 1)
+light_energy = 2.0
 shadow_enabled = true
 spot_range = 6.0
 spot_angle = 32.0
 
 [node name="Fuelllicht" type="OmniLight3D" parent="Welt"]
 position = Vector3(-1.9, 1.9, 1.9)
-light_color = Color(0.6, 0.78, 1, 1)
-light_energy = 1.9
+light_color = Color(1, 0.88, 0.73, 1)
+light_energy = 1.35
 omni_range = 6.0
 
 [node name="Kamera" type="Camera3D" parent="Welt"]
