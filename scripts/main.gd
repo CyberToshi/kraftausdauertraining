@@ -111,9 +111,11 @@ const UEBUNGEN: Dictionary = {
 @onready var _charakter: Node3D = %Charakter
 @onready var _hantelbank: Node3D = %Hantelbank
 @onready var _kamera: Camera3D = %Kamera
-@onready var _hantel_rechts: Node3D = %HantelRechts
-@onready var _hantel_links: Node3D = %HantelLinks
-@onready var _hantel_brust: Node3D = %HantelBrust
+## Die Hanteln haengen unter dem Charakter (instanzierte Szene). Dort
+## verliert "%Name" beim Web-Export den eindeutigen Namen, deshalb fester Pfad.
+@onready var _hantel_rechts: Node3D = get_node_or_null("Welt/Charakter/Skeleton3D/HandAnker/HantelRechts")
+@onready var _hantel_links: Node3D = get_node_or_null("Welt/Charakter/Skeleton3D/HandAnkerLinks/HantelLinks")
+@onready var _hantel_brust: Node3D = get_node_or_null("Welt/Charakter/Skeleton3D/BrustAnker/HantelBrust")
 @onready var _hinweis_panel: PanelContainer = %HinweisPanel
 @onready var _btn_details: Button = %BtnDetails
 ## Rand des HUD – Abstand wird je Bildschirmgroesse gesetzt.
