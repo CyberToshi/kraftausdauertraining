@@ -1,0 +1,328 @@
+[gd_scene load_steps=15 format=3]
+
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_script"]
+[ext_resource type="PackedScene" uid="uid://bggf7aajsbtig" path="res://Ch42_nonPBR.fbx" id="2_charakter"]
+[ext_resource type="PackedScene" uid="uid://dn43g37vcdi7o" path="res://Dumbbell by CreativeTrio - PW9q10xh5g.glb" id="3_hantel"]
+[ext_resource type="PackedScene" path="res://scenes/hantelbank.tscn" id="4_bank"]
+
+[sub_resource type="ProceduralSkyMaterial" id="SkyMaterial_1"]
+sky_top_color = Color(0.1, 0.13, 0.19, 1)
+sky_horizon_color = Color(0.42, 0.47, 0.55, 1)
+ground_bottom_color = Color(0.07, 0.08, 0.09, 1)
+ground_horizon_color = Color(0.3, 0.34, 0.38, 1)
+
+[sub_resource type="Sky" id="Sky_1"]
+sky_material = SubResource("SkyMaterial_1")
+
+[sub_resource type="Environment" id="Environment_1"]
+background_mode = 2
+sky = SubResource("Sky_1")
+ambient_light_source = 3
+reflected_light_source = 2
+tonemap_mode = 2
+tonemap_exposure = 1.05
+ambient_light_energy = 0.62
+
+[sub_resource type="StandardMaterial3D" id="Material_Buehne"]
+albedo_color = Color(0.1, 0.11, 0.13, 1)
+metallic = 0.1
+roughness = 0.55
+
+[sub_resource type="BoxMesh" id="Box_Buehne"]
+material = SubResource("Material_Buehne")
+size = Vector3(5.6, 0.12, 5.6)
+
+[sub_resource type="StandardMaterial3D" id="Material_Trainingsflaeche"]
+albedo_color = Color(0.075, 0.08, 0.095, 1)
+metallic = 0.15
+roughness = 0.4
+
+[sub_resource type="BoxMesh" id="Box_Trainingsflaeche"]
+material = SubResource("Material_Trainingsflaeche")
+size = Vector3(3.4, 0.02, 2.8)
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_Leiste"]
+bg_color = Color(0.06, 0.07, 0.09, 0.9)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.32, 0.4, 0.5, 0.8)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_Hinweis"]
+bg_color = Color(0.05, 0.06, 0.08, 0.94)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.32, 0.4, 0.5, 0.8)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_1"]
+
+[node name="Kraftausdauertraining" type="Node3D"]
+script = ExtResource("1_script")
+
+[node name="Welt" type="Node3D" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Welt"]
+environment = SubResource("Environment_1")
+
+[node name="Sonnenlicht" type="DirectionalLight3D" parent="Welt"]
+rotation_degrees = Vector3(-50, -34, 0)
+light_color = Color(1, 0.97, 0.92, 1)
+light_energy = 1.45
+shadow_enabled = true
+shadow_blur = 1.4
+directional_shadow_max_distance = 22.0
+
+[node name="Kantenlicht" type="DirectionalLight3D" parent="Welt"]
+rotation_degrees = Vector3(-28, 158, 0)
+light_color = Color(0.55, 0.72, 1, 1)
+light_energy = 0.7
+
+[node name="Spotscheinwerfer" type="SpotLight3D" parent="Welt"]
+position = Vector3(0, 3.4, 0.3)
+rotation_degrees = Vector3(-90, 0, 0)
+light_color = Color(1, 0.96, 0.9, 1)
+light_energy = 2.2
+shadow_enabled = true
+spot_range = 6.0
+spot_angle = 32.0
+
+[node name="Fuelllicht" type="OmniLight3D" parent="Welt"]
+position = Vector3(-1.9, 1.9, 1.9)
+light_color = Color(0.6, 0.78, 1, 1)
+light_energy = 1.9
+omni_range = 6.0
+
+[node name="Kamera" type="Camera3D" parent="Welt"]
+unique_name_in_owner = true
+position = Vector3(0, 1.2, 3.3)
+rotation_degrees = Vector3(-8, 0, 0)
+fov = 45.0
+
+[node name="Umgebung" type="Node3D" parent="Welt"]
+
+[node name="Buehne" type="MeshInstance3D" parent="Welt/Umgebung"]
+position = Vector3(0, -0.06, 0)
+mesh = SubResource("Box_Buehne")
+
+[node name="Trainingsflaeche" type="MeshInstance3D" parent="Welt/Umgebung"]
+position = Vector3(0, 0.005, 0.1)
+mesh = SubResource("Box_Trainingsflaeche")
+
+[node name="Charakter" parent="Welt" instance=ExtResource("2_charakter")]
+unique_name_in_owner = true
+
+[node name="HandAnker" type="BoneAttachment3D" parent="Welt/Charakter/Skeleton3D"]
+bone_name = "mixamorig_RightHand"
+
+[node name="HantelRechts" parent="Welt/Charakter/Skeleton3D/HandAnker" instance=ExtResource("3_hantel")]
+unique_name_in_owner = true
+position = Vector3(0, -0.015, 0.03)
+scale = Vector3(0.76, 0.76, 0.76)
+
+[node name="HandAnkerLinks" type="BoneAttachment3D" parent="Welt/Charakter/Skeleton3D"]
+bone_name = "mixamorig_LeftHand"
+
+[node name="HantelLinks" parent="Welt/Charakter/Skeleton3D/HandAnkerLinks" instance=ExtResource("3_hantel")]
+unique_name_in_owner = true
+position = Vector3(0, -0.015, 0.03)
+scale = Vector3(0.76, 0.76, 0.76)
+
+[node name="BrustAnker" type="BoneAttachment3D" parent="Welt/Charakter/Skeleton3D"]
+bone_name = "mixamorig_Spine2"
+
+[node name="HantelBrust" parent="Welt/Charakter/Skeleton3D/BrustAnker" instance=ExtResource("3_hantel")]
+unique_name_in_owner = true
+position = Vector3(0.0605, -0.055, 0.13)
+rotation_degrees = Vector3(0, 0, 90)
+scale = Vector3(0.76, 0.76, 0.76)
+
+[node name="Hantelbank" parent="Welt" instance=ExtResource("4_bank")]
+unique_name_in_owner = true
+visible = false
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="Overlay" type="Control" parent="HUD"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Rand" type="MarginContainer" parent="HUD/Overlay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 28
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 28
+theme_override_constants/margin_bottom = 26
+
+[node name="Spalte" type="VBoxContainer" parent="HUD/Overlay/Rand"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Leiste" type="PanelContainer" parent="HUD/Overlay/Rand/Spalte"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/panel = SubResource("StyleBox_Leiste")
+
+[node name="Innen" type="MarginContainer" parent="HUD/Overlay/Rand/Spalte/Leiste"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 10
+
+[node name="ButtonLeiste" type="HFlowContainer" parent="HUD/Overlay/Rand/Spalte/Leiste/Innen"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 10
+
+[node name="BtnGobletSquat" type="Button" parent="HUD/Overlay/Rand/Spalte/Leiste/Innen/ButtonLeiste"]
+custom_minimum_size = Vector2(158, 44)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 16
+toggle_mode = true
+button_group = SubResource("ButtonGroup_1")
+text = "Goblet Squats"
+metadata/uebung = "goblet_squat"
+
+[node name="BtnBankdruecken" type="Button" parent="HUD/Overlay/Rand/Spalte/Leiste/Innen/ButtonLeiste"]
+custom_minimum_size = Vector2(158, 44)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 16
+toggle_mode = true
+button_group = SubResource("ButtonGroup_1")
+text = "Bankdrücken"
+metadata/uebung = "bankdruecken"
+
+[node name="BtnRudern" type="Button" parent="HUD/Overlay/Rand/Spalte/Leiste/Innen/ButtonLeiste"]
+custom_minimum_size = Vector2(158, 44)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 16
+toggle_mode = true
+button_group = SubResource("ButtonGroup_1")
+text = "Einarmiges Rudern"
+metadata/uebung = "rudern"
+
+[node name="BtnSchulterdruecken" type="Button" parent="HUD/Overlay/Rand/Spalte/Leiste/Innen/ButtonLeiste"]
+custom_minimum_size = Vector2(158, 44)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 16
+toggle_mode = true
+button_group = SubResource("ButtonGroup_1")
+text = "Schulterdrücken"
+metadata/uebung = "schulterdruecken"
+
+[node name="BtnKreuzheben" type="Button" parent="HUD/Overlay/Rand/Spalte/Leiste/Innen/ButtonLeiste"]
+custom_minimum_size = Vector2(158, 44)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 16
+toggle_mode = true
+button_group = SubResource("ButtonGroup_1")
+text = "Rumän. Kreuzheben"
+metadata/uebung = "kreuzheben"
+
+[node name="BtnDetails" type="Button" parent="HUD/Overlay/Rand/Spalte/Leiste/Innen/ButtonLeiste"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 44)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 15
+text = "Tafel ausblenden"
+
+[node name="Abstand" type="Control" parent="HUD/Overlay/Rand/Spalte"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Unten" type="HBoxContainer" parent="HUD/Overlay/Rand/Spalte"]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_constants/separation = 16
+
+[node name="HinweisPanel" type="PanelContainer" parent="HUD/Overlay/Rand/Spalte/Unten"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(340, 0)
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_styles/panel = SubResource("StyleBox_Hinweis")
+
+[node name="Innen" type="MarginContainer" parent="HUD/Overlay/Rand/Spalte/Unten/HinweisPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 15
+
+[node name="Inhalt" type="VBoxContainer" parent="HUD/Overlay/Rand/Spalte/Unten/HinweisPanel/Innen"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="HinweisTitel" type="Label" parent="HUD/Overlay/Rand/Spalte/Unten/HinweisPanel/Innen/Inhalt"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.56, 0.85, 1, 1)
+theme_override_font_sizes/font_size = 24
+text = "Kraftausdauertraining"
+
+[node name="HinweisUntertitel" type="Label" parent="HUD/Overlay/Rand/Spalte/Unten/HinweisPanel/Innen/Inhalt"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.68, 0.73, 0.8, 1)
+theme_override_font_sizes/font_size = 13
+text = "Wähle oben eine Übung"
+
+[node name="Trennlinie" type="HSeparator" parent="HUD/Overlay/Rand/Spalte/Unten/HinweisPanel/Innen/Inhalt"]
+layout_mode = 2
+
+[node name="HinweisText" type="RichTextLabel" parent="HUD/Overlay/Rand/Spalte/Unten/HinweisPanel/Innen/Inhalt"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 90)
+layout_mode = 2
+theme_override_colors/default_color = Color(0.9, 0.92, 0.95, 1)
+theme_override_font_sizes/bold_font_size = 14
+theme_override_font_sizes/normal_font_size = 14
+bbcode_enabled = true
+text = "[b]So funktioniert's[/b]
+Klicke auf einen der fünf Buttons – der Charakter führt die Übung im Loop vor
+und hier erscheinen Muskelgruppen und die genaue Ausführungsbeschreibung.
+
+[b]Übungen[/b]
+1. Goblet Squats   2. Kurzhantel-Bankdrücken   3. Einarmiges Kurzhantel-Rudern
+4. Schulterdrücken (Overhead Press)   5. Rumänisches Kreuzheben"
+fit_content = true
+scroll_active = false
+
+[node name="Status" type="Label" parent="HUD/Overlay/Rand/Spalte/Unten/HinweisPanel/Innen/Inhalt"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.68, 0.76, 1)
+theme_override_font_sizes/font_size = 12
+text = "Bereit – noch keine Animation aktiv."
+
+[node name="Rechts" type="Control" parent="HUD/Overlay/Rand/Spalte/Unten"]
+layout_mode = 2
+size_flags_horizontal = 3

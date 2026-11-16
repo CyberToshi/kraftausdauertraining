@@ -1,0 +1,73 @@
+[gd_scene load_steps=8 format=3]
+
+[sub_resource type="StandardMaterial3D" id="Material_Polster"]
+albedo_color = Color(0.07, 0.075, 0.085, 1)
+roughness = 0.6
+
+[sub_resource type="StandardMaterial3D" id="Material_Rahmen"]
+albedo_color = Color(0.13, 0.14, 0.16, 1)
+metallic = 0.7
+roughness = 0.35
+
+[sub_resource type="BoxMesh" id="Box_Polster"]
+material = SubResource("Material_Polster")
+size = Vector3(0.3, 0.07, 0.6)
+
+[sub_resource type="BoxMesh" id="Box_Lehne"]
+material = SubResource("Material_Polster")
+size = Vector3(0.3, 0.06, 0.55)
+
+[sub_resource type="BoxMesh" id="Box_Traeger"]
+material = SubResource("Material_Rahmen")
+size = Vector3(0.07, 0.05, 0.95)
+
+[sub_resource type="BoxMesh" id="Box_Bein"]
+material = SubResource("Material_Rahmen")
+size = Vector3(0.06, 0.37, 0.06)
+
+[sub_resource type="BoxMesh" id="Box_Fuss"]
+material = SubResource("Material_Rahmen")
+size = Vector3(0.44, 0.05, 0.07)
+
+[node name="Hantelbank" type="Node3D"]
+
+[node name="Rahmen" type="Node3D" parent="."]
+
+[node name="Traeger" type="MeshInstance3D" parent="Rahmen"]
+position = Vector3(0, 0.375, 0)
+mesh = SubResource("Box_Traeger")
+
+[node name="BeinVorneL" type="MeshInstance3D" parent="Rahmen"]
+position = Vector3(-0.13, 0.185, -0.33)
+mesh = SubResource("Box_Bein")
+
+[node name="BeinVorneR" type="MeshInstance3D" parent="Rahmen"]
+position = Vector3(0.13, 0.185, -0.33)
+mesh = SubResource("Box_Bein")
+
+[node name="BeinHintenL" type="MeshInstance3D" parent="Rahmen"]
+position = Vector3(-0.13, 0.185, 0.5)
+mesh = SubResource("Box_Bein")
+
+[node name="BeinHintenR" type="MeshInstance3D" parent="Rahmen"]
+position = Vector3(0.13, 0.185, 0.5)
+mesh = SubResource("Box_Bein")
+
+[node name="FussVorne" type="MeshInstance3D" parent="Rahmen"]
+position = Vector3(0, 0.025, -0.33)
+mesh = SubResource("Box_Fuss")
+
+[node name="FussHinten" type="MeshInstance3D" parent="Rahmen"]
+position = Vector3(0, 0.025, 0.5)
+mesh = SubResource("Box_Fuss")
+
+[node name="Polster" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.405, -0.135)
+mesh = SubResource("Box_Polster")
+
+[node name="Lehne" type="Node3D" parent="."]
+position = Vector3(0, 0.44, 0.165)
+
+[node name="PolsterHinten" type="MeshInstance3D" parent="Lehne"]
+position = Vector3(0, 0.03, 0.275)
+mesh = SubResource("Box_Lehne")

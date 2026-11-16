@@ -1,0 +1,10 @@
+# Godot 4+ specific ignores
+.godot/
+/android/
+# Gerenderte Pruefbilder der Animationskontrolle
+_shots/
+# Archiv-Downloads
+*.zip
+# Systemdateien
+.DS_Store
+Thumbs.db
